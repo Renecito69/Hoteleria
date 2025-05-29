@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import HotelCard from "./HotelCard";
+import HotelCard from "./HotelCard.tsx";
 import React from "react";
 
 type Hotel = {
@@ -31,6 +31,7 @@ export default function HotelList({ onAdd }: Props) {
   const [page, setPage] = useState(1);
   const [starFilter, setStarFilter] = useState<number | null>(null);
   const [locationFilter, setLocationFilter] = useState<string>("");
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
 
   const loader = useRef<HTMLDivElement>(null);
 
@@ -85,13 +86,58 @@ export default function HotelList({ onAdd }: Props) {
         />
       </div>
 
-      {/* Lista de hoteles con cuadrícula 4 columnas */}
+      {/* Lista de hoteles */}
       <div className="hotel-grid">
         {visibleHotels.map((hotel) => (
-          <HotelCard key={hotel.id} {...hotel} onAdd={() => onAdd(hotel)} />
+          <HotelCard
+            key={hotel.id}
+            {...hotel}
+            onAdd={() => onAdd(hotel)}
+            onViewDetail={() => setSelectedHotel(hotel)}
+          />
         ))}
         <div ref={loader} style={{ height: 1 }}></div>
       </div>
+
+      {/* Vista de detalle */}
+      {selectedHotel && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: 20,
+              borderRadius: 10,
+              width: "80%",
+              maxWidth: 500,
+              boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+            }}
+          >
+            <h3>{selectedHotel.name}</h3>
+            <img
+              src={selectedHotel.image}
+              alt={selectedHotel.name}
+              style={{ width: "100%", height: 200, objectFit: "cover" }}
+            />
+            <p>Precio: ${selectedHotel.price}</p>
+            <p>Estrellas: {selectedHotel.stars}</p>
+            <p>Ubicación: {selectedHotel.location}</p>
+            <button onClick={() => setSelectedHotel(null)}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

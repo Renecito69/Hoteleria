@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CustomerForm from "./components/CustomerForm";
-import HotelList from "./components/HotelList";
-import Cart from "./components/Cart";
+import CustomerForm from "./components/CustomerForm.tsx";
+import HotelList from "./components/HotelList.tsx";
+import Cart from "./components/Cart.tsx";
 import React from "react";
 import "./styles.css";
 
@@ -83,3 +83,5 @@ function App() {
 }
 
 export default App;
+
+

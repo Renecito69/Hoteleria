@@ -1,6 +1,5 @@
 import React from "react";
 
-
 type Props = {
   name: string;
   image: string;
@@ -8,6 +7,7 @@ type Props = {
   stars: number;
   location: string;
   onAdd: () => void;
+  onViewDetail: () => void;
 };
 
 export default function HotelCard({
@@ -17,6 +17,7 @@ export default function HotelCard({
   stars,
   location,
   onAdd,
+  onViewDetail,
 }: Props) {
   return (
     <div style={{ border: "1px solid #ccc", padding: 10, marginBottom: 10 }}>
@@ -29,7 +30,10 @@ export default function HotelCard({
       <p>Precio: ${price}</p>
       <p>⭐ {stars} estrellas</p>
       <p>📍 {location}</p>
-      <button onClick={onAdd}>Agregar al carrito</button>
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button onClick={onAdd}>Agregar al carrito</button>
+        <button onClick={onViewDetail}>Ver Detalle</button>
+      </div>
     </div>
   );
 }
